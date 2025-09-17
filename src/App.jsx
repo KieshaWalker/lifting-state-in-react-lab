@@ -1,35 +1,32 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import IngredientList from './components/IngredientList/IngredientList';
+import BurgerStack from './components/BurgerStack/BurgerStack';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [burgerIngredients, setBurgerIngredients] = useState([]);
+
+  const addToBurger = (addingredient) => {
+    setBurgerIngredients( event => [...event, addingredient]);
+    console.log('added', addingredient);
+  };
+
+  // Accept an index and remove that item from the burger
+  const removeFromBurger = (indexToRemove) => {
+    setBurgerIngredients(event => event.filter((_, i) => i !== indexToRemove));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <main>
+      <h1>Burger Stacker</h1>
+      <section>
+        <IngredientList addToBurger={addToBurger} />
+      </section>
+      <section>
+        <BurgerStack ingredients={burgerIngredients} removeFromBurger={removeFromBurger} />
+      </section>
+    </main>
+  );
+};
 
-export default App
+export default App;
